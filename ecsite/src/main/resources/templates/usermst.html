@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>EC site</title>
+	<link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="/js/common.js" th:src="@{/js/common.js}"></script>
+	<script>
+		$(() => {
+			$('.checkBtn').click(function () {
+				let jsonString = {
+					'userName': $('input[name=userName]').val()
+				};
+				$.ajax({
+					type: 'POST',
+					url: '/ecsite/admin/api/check',
+					data: JSON.stringify(jsonString),
+					contentType: 'application/json',
+					datatype: 'json',
+					scriptCharset: 'utf-8'
+				})
+					.then(function (result) {
+						if (result == 1) {
+							alert('その名前は登録されています。');
+							$('span#checkOK').prop('class', 'hidden');
+						} else {
+							$('button#register').prop('disabled', false);
+							$('span#checkOK').prop('class', 'info');
+						}
+					}
+					)
+			});
+		});
+	</script>
+</head>
+
+<body>
+
+	<header>
+		<h1>My EC Site</h1>
+	</header>
+
+	<table id="adminPage">
+		<h2>新規登録</h2>
+
+		<form name="adduserForm" id="addGoodsForm" method="post" action="/ecsite/admin/addUser"
+			th:action="@{/ecsite/admin/addUser}">
+			<p>ユーザーネーム:<input type="text" name="userName" id="userName" />
+				<button type="button" class="checkBtn">重複確認</button>
+				<span id="checkOK" class="hidden">OK</span>
+			</p>
+
+			<p>パスワード:<input type="text" name="password" /></p>
+			<p>フルネーム:<input type="text" name="fullName" /></p>
+			<button type="submit" id="register" disabled>登録</button>
+
+		</form>
+		</div>
+
+		<script>
+
+		</script>
+</body>
+
+</html>

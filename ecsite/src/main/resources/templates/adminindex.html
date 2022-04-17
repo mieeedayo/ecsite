@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>EC site</title>
+	<link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+
+</head>
+
+<body>
+
+	<header>
+		<h1>My EC Site --Admin page</h1>
+	</header>
+
+	<div id="adminPage">
+		<h2>管理者ログイン</h2>
+		<form name="loginForm" method="post" action="/ecsite/admin/welcome" th:action="@{/ecsite/admin/welcome}">
+			<p>User name:<input type="text" name="userName" /></p>
+			<p>Password:<input type="password" name="password" /></p>
+			<button t>Login</button>
+
+		</form>
+	</div>
+	<br>
+	<form name="UserForm" id="adminPage" method="post" action="/ecsite/admin/usermst"
+		th:action="@{/ecsite/admin/usermst}">
+		<button type="submit" id="change">新規追加</button>
+
+		<script>
+			window.onload = function () {
+				var ref = document.referrer;
+
+				if (ref.match(/adminindex/)) {
+					alert(document.referrer);
+					alert("アドミンインデックスから来ました")
+					document.getElementById('change').disabled = true;
+				}
+				else {
+					alert(document.referrer);
+					alert("それ以外からきました")
+					document.getElementById('change').disabled = false;
+				}
+			};
+
+		</script>
+		<!--
+				$('#change').prop('disable', true);
+	<input type="hidden" name="userName" th:value="${userName}" />
+		<input type="hidden" name="password" th:value="${password}" />
+		-->
+	</form>
+	<!--	-->
+</body>
+
+</html>
